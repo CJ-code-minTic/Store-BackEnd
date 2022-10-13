@@ -1,0 +1,24 @@
+{
+  "name": "store-backend",
+  "version": "1.0.0",
+  "description": "BackEnd Store project mintic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CJ-code-minTic/Store-BackEnd.git"
+  },
+  "keywords": [
+    "store",
+    "node",
+    "backend"
+  ],
+  "author": "Juan Pablo Chicaiza - Jonathan Giraldo Diaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CJ-code-minTic/Store-BackEnd/issues"
+  },
+  "homepage": "https://github.com/CJ-code-minTic/Store-BackEnd#readme"
+}
