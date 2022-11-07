@@ -1,6 +1,7 @@
 import { config } from 'dotenv'
 import http from "http";
 import app from "./src/app/app.js";
+import './src/conf/database.js'
 
 config();
 
