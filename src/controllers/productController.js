@@ -43,4 +43,58 @@ const getAllProducts = async(req,res)=>{
     }
 }
 
-export {createProduct, getAllProducts}
+const getProductById = async(req,res)=>{
+    try {        
+        const id = req.params.id
+        
+        const product = await Product.findById(id)
+        
+        if(product === null){
+            res.status(404).json({message:"Producto no Encontrado"})
+        }
+        else{
+            res.status(200).json(product)
+        }        
+
+    } catch (error) {
+        res.status(500).json({message: "Error Interno del Servidor",detail: error})
+    }
+}
+
+const updateProduct = async(req,res)=>{
+    try {
+        const id = req.params.id;
+        let stock = false
+        const {
+            image,
+            name,
+            description,
+            price,
+            amount
+        } = req.body
+
+        if(amount > 0){
+            stock = true
+        }
+
+        const data = {
+            image:image,
+            name:name,
+            description:description,
+            price:price,
+            amount:amount,
+            stock:stock
+        }
+        
+        await Product.findByIdAndUpdate(id,data)
+
+        const productUpdate = await Product.findById(id)
+
+        res.status(200).json(productUpdate)
+
+    } catch (error) {
+        res.status(500).json({message: "Error Interno del Servidor",detail: error})
+    }
+}
+
+export {createProduct, getAllProducts, updateProduct, getProductById}

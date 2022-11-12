@@ -4,7 +4,7 @@ import { createSale, getAllSales } from "../controllers/saleController.js";
 
 const saleRouter = Router()
 
-saleRouter.post("/sale",createSaleRequest,createSale)
-saleRouter.get("/sale",getSaleRequest,getAllSales)
+saleRouter.post("/sale",createSale)
+saleRouter.get("/sale",getAllSales)
 
 export {saleRouter}

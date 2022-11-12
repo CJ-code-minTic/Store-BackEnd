@@ -1,23 +1,40 @@
-import bcrypt from "bcryptjs";
-import Sale from "../models/sale.js";
+import Sale from "../models/sales.js";
 
 const createSale = async (req, res) => {
-    try {
-        const { id,
-            date,
-            client,
-            product,
-            value } = req.body
+    try {        
 
-        const sale = await Sale.create({
-            id: id,
-            date: date,
-            client: client,
-            product: product,
-            value: value
-        })
+        const {
+            user,
+            products
+        } = req.body
 
-        res.status(201).json(sale);
+        let productsArray = []
+
+        let totalSale
+
+        products.forEach(product => {
+            const totalProduct = product.amount * product.price
+            const data = {
+                productId:product.productId,
+                amount:amount,
+                price:price,
+                total:totalProduct
+            }
+            productsArray.push(data)
+            totalSale += totalProduct
+        });
+
+        const saleData = {
+            user:user,
+            products:products,
+            total:totalSale
+        }
+
+        const sale = Sale(saleData)
+        const saleSave = await sale.save()
+
+        res.status(201).json(saleSave)
+        
     } catch (error) {
         res.status(500).json({ message: "Error Interno del servidor", detail: error })
     }
@@ -25,7 +42,7 @@ const createSale = async (req, res) => {
 
 const getAllSales = async (req, res) => {
     try {
-        res.send(await Sale.findAll())
+        res.send(await Sale.find())
     } catch (error) {
         res.status(500).json({ message: "Error Interno del servidor", detail: error })
     }

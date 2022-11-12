@@ -6,7 +6,14 @@ const saleSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId, ref: "User", required: true
     },
-    products: [{ type: Schema.Types.ObjectId, ref: "Product", required: true }]
+    products: [
+        { 
+            productId:{type: Schema.Types.ObjectId, ref: "Product", required: true },
+            amount:{type:Number,required:true},
+            price:{type:Number,required:true},
+            total:{type:Number,required:true}
+        }
+    ]
 },{
     timestamps: true,
     versionKey:false
