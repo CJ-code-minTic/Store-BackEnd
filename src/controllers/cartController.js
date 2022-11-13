@@ -86,4 +86,57 @@ const getCartByUser = async (req, res) => {
     }
 }
 
-export { addProductCart, getCartByUser }
+const deleteCart = async (req,res)=>{
+    try {        
+        const id = req.params.id
+
+        const cartDb = await Cart.findById(id)
+
+        cartDb.products.forEach(async p =>{
+            const productDb = await Product.findById(p.productId)
+            productDb.amount += p.amount
+            if(productDb.amount > 0) productDb.stock = true
+            await productDb.save()
+        })
+
+        await cartDb.delete()
+
+        res.status(200).json({message:"Carrito Eliminado Correctamente"})
+
+    } catch (error) {
+        res.status(500).json({ message: "Error Interno del servidor", detail: error })
+    }
+}
+
+const deleteProductCart = async(req,res)=>{
+    try {
+        const {id,productId} = req.body
+        const cartDb = await Cart.findById(id)
+        const productDb = await Product.findById(productId)
+        let total = 0
+        
+        cartDb.products.forEach(async (p,i) =>{
+            if(p.productId == productId){
+                productDb.amount += p.amount
+                if(productDb.amount > 0) productDb.stock = true
+                cartDb.products.splice(i,1)
+            }
+        })
+
+        cartDb.products.forEach(async p =>{
+            total += p.total
+        })
+
+        cartDb.total = total
+
+        await productDb.save()
+        await cartDb.save()
+
+        res.status(200).json({message:"Producto Eliminado del Carrito Correctamente"})
+        
+    } catch (error) {        
+        res.status(500).json({ message: "Error Interno del servidor", detail: error })
+    }
+}
+
+export { addProductCart, getCartByUser, deleteCart,deleteProductCart }

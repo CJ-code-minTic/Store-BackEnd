@@ -97,4 +97,14 @@ const updateProduct = async(req,res)=>{
     }
 }
 
-export {createProduct, getAllProducts, updateProduct, getProductById}
+const deleteProduct = async(req,res)=>{
+    try {
+        const id = req.params.id
+        await Product.findByIdAndDelete(id)
+        res.status(200).json({message:"Eliminado Correctamente"})
+    } catch (error) {
+        res.status(500).json({message: "Error Interno del Servidor",detail: error})
+    }
+}
+
+export {createProduct, getAllProducts, updateProduct, getProductById,deleteProduct}

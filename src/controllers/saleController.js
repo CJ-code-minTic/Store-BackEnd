@@ -1,37 +1,25 @@
 import Sale from "../models/sales.js";
+import Cart from "../models/Cart.js";
 
 const createSale = async (req, res) => {
     try {        
 
         const {
-            user,
-            products
+            user            
         } = req.body
 
-        let productsArray = []
-
-        let totalSale
-
-        products.forEach(product => {
-            const totalProduct = product.amount * product.price
-            const data = {
-                productId:product.productId,
-                amount:amount,
-                price:price,
-                total:totalProduct
-            }
-            productsArray.push(data)
-            totalSale += totalProduct
-        });
+        const cartDB = await Cart.findOne({user:user})        
 
         const saleData = {
             user:user,
-            products:products,
-            total:totalSale
+            products:cartDB.products,
+            total:cartDB.total
         }
 
         const sale = Sale(saleData)
         const saleSave = await sale.save()
+
+        await Cart.findOneAndDelete({user:user})
 
         res.status(201).json(saleSave)
         
