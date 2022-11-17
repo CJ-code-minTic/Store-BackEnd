@@ -134,7 +134,7 @@ const deleteProductCart = async(req,res)=>{
 
         res.status(200).json({message:"Producto Eliminado del Carrito Correctamente"})
         
-    } catch (error) {        
+    } catch (error) {                
         res.status(500).json({ message: "Error Interno del servidor", detail: error })
     }
 }
