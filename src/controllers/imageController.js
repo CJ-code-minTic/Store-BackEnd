@@ -1,5 +1,3 @@
-import path from 'path';
-
 const uploadImage = async (req, res) => {
     try {                
 

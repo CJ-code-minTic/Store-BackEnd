@@ -27,7 +27,8 @@ const addProductCart = async (req, res) => {
                         productId: product.productId,
                         amount: product.amount,
                         price: product.price,
-                        total: product.amount * product.price
+                        total: product.amount * product.price,
+                        image: productDB.image
                     }
                 ],
                 total: product.amount * product.price
@@ -49,7 +50,8 @@ const addProductCart = async (req, res) => {
                     productId: product.productId,
                     amount: product.amount,
                     price: product.price,
-                    total: product.amount * product.price
+                    total: product.amount * product.price,
+                    image: productDB.image
                 }
                 cart.products.push(data)                
             }
@@ -90,7 +92,7 @@ const deleteCart = async (req,res)=>{
     try {        
         const id = req.params.id
 
-        const cartDb = await Cart.findById(id)
+        const cartDb = await Cart.findOne({user:id})
 
         cartDb.products.forEach(async p =>{
             const productDb = await Product.findById(p.productId)

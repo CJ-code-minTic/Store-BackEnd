@@ -8,7 +8,8 @@ const cartSchema = new Schema({
             productId:{type: Schema.Types.ObjectId, ref: "Product", required: true },
             amount:{type:Number,required:true},
             price:{type:Number,required:true},
-            total:{type:Number,required:true}
+            total:{type:Number,required:true},
+            image:{type:String}
         }
     ]    
 },
